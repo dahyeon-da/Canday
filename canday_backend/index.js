@@ -7,5 +7,5 @@ app.get('/', (req, res) => {
 
 // 웹 서버 구동 및 포트번호 확인 문구
 app.listen(port, () => { 
-    console.log(`웹서버 구동... ${port}`); 
+    console.log(`웹서버 구동... 뭘까? ${port}`); 
 });
