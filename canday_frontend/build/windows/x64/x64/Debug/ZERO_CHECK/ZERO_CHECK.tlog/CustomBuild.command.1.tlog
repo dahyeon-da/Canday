@@ -1,0 +1,10 @@
+^C:\WORKSPACE\CANDAY\CANDAY_FRONTEND\BUILD\WINDOWS\X64\CMAKEFILES\8E54D703968A5111EC2FECE7CC144C52\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/workspace/canday/canday_frontend/windows -BC:/workspace/canday/canday_frontend/build/windows/x64 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/workspace/canday/canday_frontend/build/windows/x64/canday_frontend.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

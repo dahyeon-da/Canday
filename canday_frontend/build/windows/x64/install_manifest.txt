@@ -1,0 +1,10 @@
+C:/workspace/canday/canday_frontend/build/windows/x64/runner/Debug/data/icudtl.dat
+C:/workspace/canday/canday_frontend/build/windows/x64/runner/Debug/flutter_windows.dll
+C:/workspace/canday/canday_frontend/build/windows/x64/runner/Debug/data/flutter_assets/AssetManifest.bin
+C:/workspace/canday/canday_frontend/build/windows/x64/runner/Debug/data/flutter_assets/AssetManifest.json
+C:/workspace/canday/canday_frontend/build/windows/x64/runner/Debug/data/flutter_assets/FontManifest.json
+C:/workspace/canday/canday_frontend/build/windows/x64/runner/Debug/data/flutter_assets/fonts/MaterialIcons-Regular.otf
+C:/workspace/canday/canday_frontend/build/windows/x64/runner/Debug/data/flutter_assets/kernel_blob.bin
+C:/workspace/canday/canday_frontend/build/windows/x64/runner/Debug/data/flutter_assets/NOTICES.Z
+C:/workspace/canday/canday_frontend/build/windows/x64/runner/Debug/data/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
+C:/workspace/canday/canday_frontend/build/windows/x64/runner/Debug/data/flutter_assets/shaders/ink_sparkle.frag

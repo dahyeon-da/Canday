@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\workspace\canday\canday_frontend\build\windows\x64\CMakeFiles\8e54d703968a5111ec2fece7cc144c52\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{8C75EA62-B91E-3927-9EC8-BA97B3FBA860}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

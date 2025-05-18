@@ -1,0 +1,10 @@
+^C:\WORKSPACE\CANDAY\CANDAY_FRONTEND\BUILD\WINDOWS\X64\CMAKEFILES\8E54D703968A5111EC2FECE7CC144C52\INSTALL_FORCE.RULE
+setlocal
+cd .
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
