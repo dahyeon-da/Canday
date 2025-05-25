@@ -10,8 +10,6 @@ const { StatusCodes, ReasonPhrases } = require("http-status-codes");
 
 // 회원가입
 exports.register = async (req, res) => {
-  console.log("req.body:", req.body);
-  console.log("register start");
   const { userEmailAdress, userPassword, userNickname, userBirth } = req.body;
 
   // 이메일 중복 확인 함수
@@ -44,7 +42,6 @@ exports.register = async (req, res) => {
 
   // 회원가입을 성공적으로 완료했을 때
   if (affectedRows > 0) {
-    console.log("register ok");
     const token = await jwt.jwtSign({ userEmailAdress });
 
     const data = {
@@ -61,7 +58,6 @@ exports.register = async (req, res) => {
       data: data,
     });
   } else {
-    console.log("register fail");
     return res.send({ result: "fail" });
   }
 };
@@ -101,9 +97,9 @@ exports.login = async (req, res) => {
         userNickname: userData.userNickname,
         userBirth: userData.userBirth,
       };
-      return res.status(StatusCodes.CREATED).json({
-        code: StatusCodes.CREATED,
-        httpStatus: ReasonPhrases.CREATED,
+      return res.status(StatusCodes.OK).json({
+        code: StatusCodes.OK,
+        httpStatus: ReasonPhrases.OK,
         message: "Login Successful",
         token: token,
         data: data,
