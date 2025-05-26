@@ -8,7 +8,7 @@ const { StatusCodes, ReasonPhrases } = require('http-status-codes');
  */
 
 module.exports = (req, res, next) => {
-  const token = req.headers['Authorization'];
+  const token = req.headers["authorization"];
 
   if (!token) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
