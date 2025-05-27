@@ -10,6 +10,7 @@ app.use(bodyParser.json());
 
 // URL 인코딩된 본문을 처리하기 위한 미들웨어 (폼 데이터)
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.use('/', router);
 

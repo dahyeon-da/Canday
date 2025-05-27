@@ -18,3 +18,15 @@ exports.writeDiary = async (
   const sql = `INSERT INTO diaryTable(diaryDate, diaryContent, emotionNum, diaryImageNum) VALUES (?, ?, ?, ?)`;
   return await query(sql, [diaryDate, diaryContent, emotionNum, diaryImageNum]);
 };
+
+/**
+ * 일기 삭제 처리 함수
+ * 
+ * @param {int} diaryNum - 일기 식별번호
+ */
+
+exports.deleteDiary = async (diaryNum) => {
+  const sql = `DELETE FROM diaryTable WHERE diaryNum = ?`;
+  let result = await query(sql, [diaryNum]);
+  return result.affectedRows;
+}
