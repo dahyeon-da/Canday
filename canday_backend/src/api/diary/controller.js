@@ -3,6 +3,7 @@ const {
   deleteDiary,
   modifyDiary,
   checkDiary,
+  showDiary,
 } = require("./repository");
 const { StatusCodes, ReasonPhrases } = require("http-status-codes");
 
@@ -83,10 +84,9 @@ exports.diaryModify = async (req, res) => {
   // 일기가 존재하는지 확인하는 함수
   const rows = await checkDiary(diaryNum);
   const check = rows[0].isExist;
-  console.log(check);
 
   if (check < 1) {
-    // 일기가 존재하지 않을때
+    // 일기 수정 시 일기가 존재하지 않을때
     return res.status(StatusCodes.NOT_FOUND).json({
       code: StatusCodes.NOT_FOUND,
       httpStatus: ReasonPhrases.NOT_FOUND,
@@ -109,11 +109,58 @@ exports.diaryModify = async (req, res) => {
         message: "Modify Successful",
         data: data,
       });
-    } else {
+      // 일기 수정 시 토큰 오류
       return res.status(StatusCodes.UNAUTHORIZED).json({
         code: StatusCodes.UNAUTHORIZED,
         httpStatus: ReasonPhrases.UNAUTHORIZED,
         message: "Invalid Token",
+      });
+    }
+  }
+};
+
+// 일기 정보 불러오기
+exports.diaryShow = async (req, res) => {
+  let diaryNum = req.params.diaryNum;
+
+  const diary = await showDiary(diaryNum);
+
+  // 일기가 존재하는지 확인하는 함수
+  const rows = await checkDiary(diaryNum);
+  const check = rows[0].isExist;
+
+  if (check < 1) {
+    // 일기 수정 시 일기가 존재하지 않을때
+    return res.status(StatusCodes.NOT_FOUND).json({
+      code: StatusCodes.NOT_FOUND,
+      httpStatus: ReasonPhrases.NOT_FOUND,
+      message: "A Non-Existent Post",
+    });
+  } else {
+    if (diary === null || diary === undefined) {
+      // 일기 수정 시 토큰 오류
+      return res.status(StatusCodes.UNAUTHORIZED).json({
+        code: StatusCodes.UNAUTHORIZED,
+        httpStatus: ReasonPhrases.UNAUTHORIZED,
+        message: "Invalid Token",
+      });
+    } else {
+      // 일기 불러오기 성공 시
+      const data = {
+        diaryNum: diaryNum,
+        diaryDate: diary.diaryDate,
+        diaryContent: diary.diaryContent,
+        emotionImage: diary.emotionImage,
+        emotionColorCode: diary.emotionColorCode,
+        emotionKorean: diary.emotionKorean,
+        diaryImageNum: diary.diaryImageNum,
+      };
+
+      return res.status(StatusCodes.OK).json({
+        code: StatusCodes.OK,
+        httpStatus: ReasonPhrases.OK,
+        message: "Show Successful",
+        data: data,
       });
     }
   }

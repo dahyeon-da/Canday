@@ -67,3 +67,19 @@ exports.checkDiary = async (
   `;
   return await query(sql, [diaryNum]);
 };
+
+/**
+ * 일기에 대한 모든 정보 불러오는 함수
+ * 
+ * @param {int} diaryNum - 일기 식별번호
+ */
+
+exports.showDiary = async(
+  diaryNum
+) => {
+  const sql = `SELECT d.diaryNum, d.diaryDate, d.diaryContent, d.diaryImageNum, e.emotionImage, e.emotionColorCode, e.emotionKorean FROM diarytable d INNER JOIN emotiontable e ON d.emotionNum = e.emotionNum WHERE d.diaryNum = ?;`;
+
+  const rows = await query(sql, [diaryNum]);
+
+  return await rows[0];
+}

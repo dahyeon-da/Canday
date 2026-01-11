@@ -15,5 +15,6 @@ router.post("/auth/login", userController.login);
 router.post("/diary/write", verify, diaryController.diaryWrite);
 router.delete("/diary/delete/:diaryNum", verify, diaryController.diaryDelete);
 router.patch("/diary/modify/:diaryNum", verify, diaryController.diaryModify);
+router.get("/diary/show/:diaryNum", verify, diaryController.diaryShow);
 
 module.exports = router;
