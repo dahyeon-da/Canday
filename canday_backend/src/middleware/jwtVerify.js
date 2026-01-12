@@ -4,7 +4,7 @@ const { StatusCodes, ReasonPhrases } = require('http-status-codes');
 /**
  * JWT 검증 미들웨어
  * 
- * 헤더에 있는 Authorization 내용을 검증하고, 유효한 JWT일 경우 rea.user에 디코딩된 정보를 저장한다.
+ * 헤더에 있는 Authorization 내용을 검증하고, 유효한 JWT일 경우 req.user에 디코딩된 정보를 저장한다.
  */
 
 module.exports = (req, res, next) => {

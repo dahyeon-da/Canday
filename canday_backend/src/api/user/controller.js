@@ -90,7 +90,10 @@ exports.login = async (req, res) => {
       });
     } else {
       const userData = await findUserData(userEmailAdress);
-      let token = await jwt.jwtSign({ userEmailAdress });
+      let token = await jwt.jwtSign({
+        userEmailAdress: userEmailAdress,
+        userNum: userData.userNum,
+      });
 
       const data = {
         userEmailAdress: userData.userEmailAdress,
