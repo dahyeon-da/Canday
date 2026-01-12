@@ -7,16 +7,22 @@ const { query } = require("../../data/index");
  * @param {string} diaryContent - 일기 내용
  * @param {int} emotionNum - 감정 번호
  * @param {int} diaryImageNum - 일기에 첨부한 사진 번호 - NULL 가능
+ * @param {int} userNum - 작성자를 식별하기 위한 번호
  */
 
 exports.writeDiary = async (
   diaryDate,
   diaryContent,
   emotionNum,
-  diaryImageNum
+  userNum, 
 ) => {
-  const sql = `INSERT INTO diaryTable(diaryDate, diaryContent, emotionNum, diaryImageNum) VALUES (?, ?, ?, ?)`;
-  return await query(sql, [diaryDate, diaryContent, emotionNum, diaryImageNum]);
+  const sql = `INSERT INTO diaryTable(diaryDate, diaryContent, emotionNum, userNum) VALUES (?, ?, ?, ?)`;
+  return await query(sql, [
+    diaryDate,
+    diaryContent,
+    emotionNum,
+    userNum,
+  ]);
 };
 
 /**
@@ -49,9 +55,9 @@ exports.modifyDiary = async (
   diaryImageNum
 ) => {
   const sql = `UPDATE diaryTable SET diaryContent = ?, emotionNum = ?,
-  diaryImageNum = ? WHERE diaryNum = ?;
+  diaryImageNum = ?, diaryDate = ? WHERE diaryNum = ?;
   `;
-  return await query(sql, [diaryContent, emotionNum, diaryImageNum, diaryNum]);
+  return await query(sql, [diaryContent, emotionNum, diaryImageNum, diaryDate, diaryNum]);
 };
 
 /**

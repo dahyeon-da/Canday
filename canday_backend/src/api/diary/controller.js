@@ -9,14 +9,15 @@ const { StatusCodes, ReasonPhrases } = require("http-status-codes");
 
 // 일기 작성
 exports.diaryWrite = async (req, res) => {
-  const { diaryDate, diaryContent, emotionNum, diaryImageNum } = req.body;
+  const { diaryDate, diaryContent, emotionNum } = req.body;
+  const userNum = req.user.userNum;
 
   // 일기 작성 함수
   const { affectedRows, insertId } = await writeDiary(
     diaryDate,
     diaryContent,
     emotionNum,
-    diaryImageNum
+    userNum
   );
 
   // 일기 작성을 성공적으로 완료했을 때
@@ -25,7 +26,6 @@ exports.diaryWrite = async (req, res) => {
       diaryDate: diaryDate,
       diaryContent: diaryContent,
       emotionNum: emotionNum,
-      diaryImageNum: diaryImageNum,
     };
 
     return res.status(StatusCodes.CREATED).json({
@@ -46,7 +46,6 @@ exports.diaryWrite = async (req, res) => {
 // 일기 삭제
 exports.diaryDelete = async (req, res) => {
   let diaryNum = req.params.diaryNum;
-  console.log("🧪 req.body:", req.params.diaryNum);
 
   // 일기 삭제 함수
   const affectedRows = await deleteDiary(diaryNum);
