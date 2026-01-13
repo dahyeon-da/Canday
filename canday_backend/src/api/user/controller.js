@@ -1,14 +1,21 @@
 const {
   registerUser,
   findUserEmail,
-  loginUser,
   findUserData,
+  findByUserEmail,
 } = require("./repository");
 const jwt = require("../../middleware/jwt");
 const crypto = require("crypto");
 const { StatusCodes, ReasonPhrases } = require("http-status-codes");
 
-// 회원가입
+// 비밀번호 암호화 함수
+function hashPassword(password, salt) {
+  return crypto
+    .pbkdf2Sync(password, salt, 100000, 64, "sha512")
+    .toString("hex");
+}
+
+// 회원가입 메소드
 exports.register = async (req, res) => {
   const { userEmailAdress, userPassword, userNickname, userBirth } = req.body;
 
@@ -24,20 +31,16 @@ exports.register = async (req, res) => {
   }
 
   // 비밀번호 암호화
-  const result = await crypto.pbkdf2Sync(
-    userPassword,
-    process.env.SALT_KEY,
-    50,
-    100,
-    "sha512"
-  );
+  const salt = crypto.randomBytes(16).toString("hex");
+  const hashed = hashPassword(userPassword, salt);
 
   // 회원가입 함수
   const { affectedRows, insertId } = await registerUser(
     userEmailAdress,
-    result.toString("base64"),
+    hashed,
     userNickname,
-    userBirth
+    userBirth,
+    salt
   );
 
   // 회원가입을 성공적으로 완료했을 때
@@ -62,27 +65,20 @@ exports.register = async (req, res) => {
   }
 };
 
-// 로그인
+// 로그인 메소드
 exports.login = async (req, res) => {
   const { userEmailAdress, userPassword } = req.body;
-
-  // 비밀번호 암호화
-  let result = crypto.pbkdf2Sync(
-    userPassword,
-    process.env.SALT_KEY,
-    50,
-    100,
-    "sha512"
-  );
-
-  // 로그인 함수
-  let loginResult = await loginUser(userEmailAdress, result.toString("base64"));
 
   // 존재하는 이메일인지 확인
   let findEmail = await findUserEmail(userEmailAdress);
 
   if (findEmail > 0) {
-    if (loginResult == null) {
+    // 해당 회원의 비밀번호를 불러오는 함수
+    const user = await findByUserEmail(userEmailAdress);
+    const hashed = hashPassword(userPassword, user.userSalt);
+    const originPassword = user.userPassword;
+
+    if (hashed !== originPassword) {
       return res.status(StatusCodes.UNAUTHORIZED).json({
         code: StatusCodes.UNAUTHORIZED,
         httpStatus: ReasonPhrases.UNAUTHORIZED,
@@ -115,4 +111,9 @@ exports.login = async (req, res) => {
       message: "Email Address Not Found",
     });
   }
+};
+
+// 회원 정보 변경 메소드
+exports.updateProfile = async (req, res) => {
+  const { userPassword } = req.body;
 };
