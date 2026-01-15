@@ -79,3 +79,16 @@ exports.findByUserEmail = async (userEmailAdress) => {
   const [rows] = await query(sql, [userEmailAdress]);
   return rows;
 };
+
+/**
+ * 비밀번호 변경 함수
+ * 
+ * @param {string} newPassword - 새로운 비밀번호
+ * @param {string} salt - 새로운 암호화값
+ */
+
+exports.passwordUpdate = async(newPassword, newSalt) => {
+  const sql = `update userPassword = ?, where userEmailAdress =?;`;
+
+  return await query(sql, [newPassword, newSalt]);
+};

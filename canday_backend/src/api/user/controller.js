@@ -3,6 +3,7 @@ const {
   findUserEmail,
   findUserData,
   findByUserEmail,
+  passwordUpdate,
 } = require("./repository");
 const jwt = require("../../middleware/jwt");
 const crypto = require("crypto");
@@ -113,7 +114,43 @@ exports.login = async (req, res) => {
   }
 };
 
-// 회원 정보 변경 메소드
-exports.updateProfile = async (req, res) => {
-  const { userPassword } = req.body;
+// 비밀번호 변경 메소드
+exports.updatePassword = async (req, res) => {
+  const { originPassword, newPassword } = req.body;
+
+  // 기존 비밀번호 암호화를 위한 기존 salt 값 찾기
+  const user = await findByUserEmail(userEmailAdress);
+
+  // 비밀번호 암호화
+  const hashed = hashPassword(originPassword, user.salt);
+
+  if (hashed !== user.userPassword) {
+    return res.status(StatusCodes.UNAUTHORIZED).json({
+      code: StatusCodes.UNAUTHORIZED,
+      httpStatus: ReasonPhrases.UNAUTHORIZED,
+      message: "Invalid Password",
+    });
+  } else {
+    // 새 비밀번호 암호화
+    const newSalt = crypto.randomBytes(16).toString("hex");
+    const newHashed = hashPassword(newPassword, newSalt);
+
+    const { affectedRows, insertId } = await passwordUpdate(
+      newPassword,
+      newSalt
+    );
+    if (affectedRows > 0) {
+      return res.status(StatusCodes.OK).json({
+        code: StatusCodes.OK,
+        httpStatus: ReasonPhrases.OK,
+        message: "Change Password Successful",
+      });
+    } else {
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        code: StatusCodes.INTERNAL_SERVER_ERROR,
+        httpStatus: ReasonPhrases.INTERNAL_SERVER_ERROR,
+        message: "Failed To Update Password",
+      });
+    }
+  }
 };
