@@ -4,6 +4,7 @@ const {
   findUserData,
   findByUserEmail,
   passwordUpdate,
+  profileUpdate,
 } = require("./repository");
 const jwt = require("../../middleware/jwt");
 const crypto = require("crypto");
@@ -154,5 +155,85 @@ exports.updatePassword = async (req, res) => {
         message: "Failed To Update Password",
       });
     }
+  }
+};
+
+// 비밀번호 인증 메소드
+exports.checkPassword = async (req, res) => {
+  const { userPassword } = req.body;
+
+  const userEmailAdress = req.user.userEmailAdress;
+
+  // 기존 비밀번호 암호화를 위한 기존 salt 값 찾기
+  const user = await findByUserEmail(userEmailAdress);
+
+  console.log(userEmailAdress);
+
+  // 비밀번호 암호화
+  const hashed = hashPassword(userPassword, user.userSalt);
+
+  if (hashed !== user.userPassword) {
+    return res.status(StatusCodes.UNAUTHORIZED).json({
+      code: StatusCodes.UNAUTHORIZED,
+      httpStatus: ReasonPhrases.UNAUTHORIZED,
+      message: "Invalid Password",
+    });
+  } else {
+    return res.status(StatusCodes.OK).json({
+      code: StatusCodes.OK,
+      httpStatus: ReasonPhrases.OK,
+      message: "Correct Password",
+      data: true,
+    });
+  }
+};
+
+// 회원정보 변경 메소드
+exports.updateProfile = async (req, res) => {
+  const { userEmailAdress, userNickname, userBirth } = req.body;
+  const recentEmailAdress = req.user.userEmailAdress;
+
+  // 존재하는 이메일인지 확인
+  let findEmail = await findUserEmail(userEmailAdress);
+
+  if (
+    (findEmail > 0 && recentEmailAdress === userEmailAdress) ||
+    findEmail === 0
+  ) {
+    // 회원정보 수정 함수
+    const { affectedRows, insertId } = await profileUpdate(
+      userEmailAdress,
+      userNickname,
+      userBirth,
+      recentEmailAdress
+    );
+
+    if (affectedRows > 0) {
+      // 회원정보 수정이 성공했을 때
+      const data = {
+        userEmailAdress: userEmailAdress,
+        userBirth: userBirth,
+        userNickname: userNickname,
+      };
+
+      return res.status(StatusCodes.OK).json({
+        code: StatusCodes.OK,
+        httpStatus: ReasonPhrases.OK,
+        message: "Update Successful",
+        data: data,
+      });
+    } else {
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        code: StatusCodes.INTERNAL_SERVER_ERROR,
+        httpStatus: ReasonPhrases.INTERNAL_SERVER_ERROR,
+        message: "Failed To Update Profile",
+      });
+    }
+  } else if (findEmail > 0 && recentEmailAdress !== userEmailAdress) {
+    return res.status(StatusCodes.CONFLICT).json({
+      code: StatusCodes.CONFLICT,
+      httpStatus: ReasonPhrases.CONFLICT,
+      message: "Duplicated Imail Adress",
+    });
   }
 };

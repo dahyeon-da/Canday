@@ -12,6 +12,8 @@ router.get("/", (req, res) => {
 router.post("/auth/register", userController.register);
 router.post("/auth/login", userController.login);
 router.patch("/auth/change/password", verify, userController.updatePassword);
+router.patch("/auth/update/profile", verify, userController.updateProfile);
+router.post("/auth/check/password", verify, userController.checkPassword);
 
 router.post("/diary/write", verify, diaryController.diaryWrite);
 router.delete("/diary/delete/:diaryNum", verify, diaryController.diaryDelete);

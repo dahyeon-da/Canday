@@ -1,8 +1,8 @@
-const { query } = require('../../data/index');
+const { query } = require("../../data/index");
 
 /**
  * 회원가입 처리 함수
- * 
+ *
  * @param {string} userEmailAdress - 사용자의 이메일
  * @param {string} userPassword - 사용자의 비밀번호
  * @param {string} userNickname - 사용자의 닉네임
@@ -27,7 +27,7 @@ exports.registerUser = async (
 };
 
 /**
- * 회원가입 시 이메일 중복 확인 함수
+ * 회원가입 또는 회원정보 변경 시 이메일 중복 확인 함수
  *
  * @param {string} userEmailAdress - 사용자의 이메일
  *
@@ -82,14 +82,38 @@ exports.findByUserEmail = async (userEmailAdress) => {
 
 /**
  * 비밀번호 변경 함수
- * 
+ *
  * @param {string} newPassword - 새로운 비밀번호
  * @param {string} salt - 새로운 암호화값
  * @param {string} userEmailAdress - 사용자의 이메일 주소
  */
 
-exports.passwordUpdate = async(newPassword, newSalt, userEmailAdress) => {
+exports.passwordUpdate = async (newPassword, newSalt, userEmailAdress) => {
   const sql = ` UPDATE usertable SET userPassword = ?, userSalt = ? WHERE userEmailAdress = ?;`;
 
   return await query(sql, [newPassword, newSalt, userEmailAdress]);
+};
+
+/**
+ * 회원정보 변경 함수
+ *
+ * @param {string} userEmailAdress - 사용자의 이메일 주소
+ * @param {string} userNickname - 사용자의 닉네임
+ * @param {date} userBirth - 사용자의 생년월일
+ */
+
+exports.profileUpdate = async (
+  userEmailAdress,
+  userNickname,
+  userBirth,
+  recentEmailAdress
+) => {
+  const sql = `update usertable set userEmailAdress = ?, userNickname = ?, userBirth = ? where userEmailAdress = ?;`;
+
+  return await query(sql, [
+    userEmailAdress,
+    userNickname,
+    userBirth,
+    recentEmailAdress,
+  ]);
 };

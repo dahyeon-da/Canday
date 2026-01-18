@@ -72,7 +72,7 @@ exports.diaryModify = async (req, res) => {
   const { diaryDate, diaryContent, emotionNum, diaryImageNum } = req.body;
 
   // 일기 수정 함수
-  const { affectedRows, inserId } = await modifyDiary(
+  const { affectedRows, insertId } = await modifyDiary(
     diaryNum,
     diaryDate,
     diaryContent,
@@ -107,12 +107,6 @@ exports.diaryModify = async (req, res) => {
         httpStatus: ReasonPhrases.OK,
         message: "Modify Successful",
         data: data,
-      });
-      // 일기 수정 시 토큰 오류
-      return res.status(StatusCodes.UNAUTHORIZED).json({
-        code: StatusCodes.UNAUTHORIZED,
-        httpStatus: ReasonPhrases.UNAUTHORIZED,
-        message: "Invalid Token",
       });
     }
   }
