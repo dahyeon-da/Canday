@@ -85,10 +85,11 @@ exports.findByUserEmail = async (userEmailAdress) => {
  * 
  * @param {string} newPassword - 새로운 비밀번호
  * @param {string} salt - 새로운 암호화값
+ * @param {string} userEmailAdress - 사용자의 이메일 주소
  */
 
-exports.passwordUpdate = async(newPassword, newSalt) => {
-  const sql = `update userPassword = ?, where userEmailAdress =?;`;
+exports.passwordUpdate = async(newPassword, newSalt, userEmailAdress) => {
+  const sql = ` UPDATE usertable SET userPassword = ?, userSalt = ? WHERE userEmailAdress = ?;`;
 
-  return await query(sql, [newPassword, newSalt]);
+  return await query(sql, [newPassword, newSalt, userEmailAdress]);
 };

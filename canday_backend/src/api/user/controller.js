@@ -117,12 +117,13 @@ exports.login = async (req, res) => {
 // 비밀번호 변경 메소드
 exports.updatePassword = async (req, res) => {
   const { originPassword, newPassword } = req.body;
+  const userEmailAdress = req.user.userEmailAdress;
 
   // 기존 비밀번호 암호화를 위한 기존 salt 값 찾기
   const user = await findByUserEmail(userEmailAdress);
 
   // 비밀번호 암호화
-  const hashed = hashPassword(originPassword, user.salt);
+  const hashed = hashPassword(originPassword, user.userSalt);
 
   if (hashed !== user.userPassword) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
@@ -136,8 +137,9 @@ exports.updatePassword = async (req, res) => {
     const newHashed = hashPassword(newPassword, newSalt);
 
     const { affectedRows, insertId } = await passwordUpdate(
-      newPassword,
-      newSalt
+      newHashed,
+      newSalt,
+      userEmailAdress
     );
     if (affectedRows > 0) {
       return res.status(StatusCodes.OK).json({
