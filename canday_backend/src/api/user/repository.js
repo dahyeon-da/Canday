@@ -14,9 +14,9 @@ exports.registerUser = async (
   userPassword,
   userNickname,
   userBirth,
-  userSalt
+  userSalt,
 ) => {
-  const sql = `INSERT INTO userTable(userEmailAdress, userPassword, userNickname, userBirth, userSalt) VALUES(?, ?, ?, ?, ?)`;
+  const sql = `INSERT INTO usertable(userEmailAdress, userPassword, userNickname, userBirth, userSalt) VALUES(?, ?, ?, ?, ?)`;
   return await query(sql, [
     userEmailAdress,
     userPassword,
@@ -35,7 +35,7 @@ exports.registerUser = async (
  */
 
 exports.findUserEmail = async (userEmailAdress) => {
-  const sql = `SELECT COUNT(*) AS count FROM userTable where userEmailAdress=?`;
+  const sql = `SELECT COUNT(*) AS count FROM usertable where userEmailAdress=?`;
   let result = await query(sql, [userEmailAdress]);
   return result.length === 0 ? null : result[0].count;
 };
@@ -62,7 +62,7 @@ exports.findUserEmail = async (userEmailAdress) => {
  */
 
 exports.findUserData = async (userEmailAdress) => {
-  const sql = `SELECT * FROM userTable WHERE userEmailAdress=?`;
+  const sql = `SELECT * FROM usertable WHERE userEmailAdress=?`;
   let result = await query(sql, [userEmailAdress]);
   return result.length === 0 ? null : result[0];
 };

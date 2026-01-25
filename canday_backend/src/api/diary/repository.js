@@ -89,3 +89,28 @@ exports.showDiary = async(
 
   return await rows[0];
 }
+
+/**
+ * 해당 회원의 일기 목록을 불러오는 함수
+ * 
+ * @param {int} userNum - 사용자의 식별번호
+ */
+
+exports.myDiaryShow = async (userNum) => {
+  const sql = `SELECT  d.diaryNum,  d.diaryDate,  d.userNum,  e.emotionImage,  e.emotionColorCode,  e.emotionKorean FROM diarytable d INNER JOIN emotiontable e  ON d.emotionNum = e.emotionNum WHERE d.userNum = ? ORDER BY d.diaryDate DESC;`;
+
+  return await query(sql, [userNum]);
+};
+
+/**
+ * 존재하는 회원인지 확인하는 함수
+ * 
+ * @param {int} userNum - 사용자의 식별번호
+ */
+
+exports.findUserNum = async (userNum) => {
+  const sql = `SELECT COUNT(*) AS count FROM usertable where userNum=0;`;
+
+  const result = query(sql, [userNum]);
+  return result.length;
+};

@@ -4,6 +4,8 @@ const {
   modifyDiary,
   checkDiary,
   showDiary,
+  myDiaryShow,
+  findUserNum,
 } = require("./repository");
 const { StatusCodes, ReasonPhrases } = require("http-status-codes");
 
@@ -17,7 +19,7 @@ exports.diaryWrite = async (req, res) => {
     diaryDate,
     diaryContent,
     emotionNum,
-    userNum
+    userNum,
   );
 
   // 일기 작성을 성공적으로 완료했을 때
@@ -77,7 +79,7 @@ exports.diaryModify = async (req, res) => {
     diaryDate,
     diaryContent,
     emotionNum,
-    diaryImageNum
+    diaryImageNum,
   );
 
   // 일기가 존재하는지 확인하는 함수
@@ -154,6 +156,37 @@ exports.diaryShow = async (req, res) => {
         httpStatus: ReasonPhrases.OK,
         message: "Show Successful",
         data: data,
+      });
+    }
+  }
+};
+
+// 본인 일기 목록 조회
+exports.showMyDiary = async (req, res) => {
+  let userNum = req.params.userNum;
+
+  const diarys = await myDiaryShow(userNum);
+  const userNumCheck = await findUserNum(userNum);
+
+  if (userNumCheck === 0) {
+    return res.status(StatusCodes.NOT_FOUND).json({
+      code: StatusCodes.NOT_FOUND,
+      httpStatus: ReasonPhrases.NOT_FOUND,
+      message: "A Non-Existent User",
+    });
+  } else {
+    if (diarys === null || diarys === undefined) {
+      return res.status(StatusCodes.UNAUTHORIZED).json({
+        code: StatusCodes.UNAUTHORIZED,
+        httpStatus: ReasonPhrases.UNAUTHORIZED,
+        message: "Invalid Token",
+      });
+    } else {
+      return res.status(StatusCodes.OK).json({
+        code: StatusCodes.OK,
+        httpStatus: ReasonPhrases.OK,
+        message: "Show Successful",
+        data: diarys,
       });
     }
   }
