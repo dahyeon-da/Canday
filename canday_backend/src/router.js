@@ -1,9 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const verify = require("./middleware/jwtVerify");
+const multer = require("multer");
+
+const upload = multer({ dest: "storage/" });
 
 const userController = require("./api/user/controller");
 const diaryController = require("./api/diary/controller");
+const fileController = require("./api/file/controller");
 
 router.get("/", (req, res) => {
   res.send("Home");
@@ -20,5 +24,11 @@ router.delete("/diary/delete/:diaryNum", verify, diaryController.diaryDelete);
 router.patch("/diary/modify/:diaryNum", verify, diaryController.diaryModify);
 router.get("/diary/show/:diaryNum", verify, diaryController.diaryShow);
 router.get("/diary/user/show/:userNum", verify, diaryController.showMyDiary);
+
+router.post(
+  "/api/file/:diaryNum",
+  upload.single("file"),
+  fileController.upload,
+);
 
 module.exports = router;
