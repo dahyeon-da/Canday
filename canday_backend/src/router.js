@@ -25,6 +25,7 @@ router.patch("/diary/modify/:diaryNum", verify, diaryController.diaryModify);
 router.get("/diary/show/:diaryNum", verify, diaryController.diaryShow);
 router.get("/diary/user/show/:userNum", verify, diaryController.showMyDiary);
 
+// 이미지 파일 업로드
 router.post(
   "/api/file/:diaryNum",
   upload.single("file"),
