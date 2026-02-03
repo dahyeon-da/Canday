@@ -12,6 +12,6 @@ const { query } = require("../../data/index");
 exports.fileUpload = async (imageFileID, diaryNum, filePath, fileSize) => {
   const sql = `INSERT INTO imagetable(imageFileID, diaryNum, filePath, fileSize) VALUES (?, ?, ?, ?);`;
 
-  const reqult = await query(sql, [imageFileID, diaryNum, dilePath]);
+  const result = await query(sql, [imageFileID, diaryNum, filePath, fileSize]);
   return result;
 };
