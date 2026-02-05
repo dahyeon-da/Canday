@@ -2,8 +2,20 @@ const express = require('express');
 const router = express.Router();
 const verify = require("./middleware/jwtVerify");
 const multer = require("multer");
+const path = require("path");
+const { v4: uuidv4 } = require("uuid");
 
-const upload = multer({ dest: "storage/" });
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "storage/");
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname); // 🔥 .png
+    cb(null, `${uuidv4()}${ext}`);
+  },
+});
+
+const upload = multer({ storage });
 
 const userController = require("./api/user/controller");
 const diaryController = require("./api/diary/controller");
@@ -25,11 +37,12 @@ router.patch("/diary/modify/:diaryNum", verify, diaryController.diaryModify);
 router.get("/diary/show/:diaryNum", verify, diaryController.diaryShow);
 router.get("/diary/user/show/:userNum", verify, diaryController.showMyDiary);
 
-// 이미지 파일 업로드
 router.post(
   "/api/file/:diaryNum",
-  upload.single("image"),
+  upload.array("image", 10),
   fileController.upload,
 );
+router.get("/api/file/:diaryNum", fileController.preview);
+router.get("/api/file/preview/image/:imageFileID", fileController.previewImage);
 
 module.exports = router;
