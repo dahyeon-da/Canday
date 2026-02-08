@@ -1,3 +1,5 @@
+import 'package:canday_frontend/src/screen/auth/login.dart';
+import 'package:canday_frontend/src/screen/auth/register.dart';
 import 'package:flutter/material.dart';
 
 class Intro extends StatefulWidget {
@@ -51,32 +53,45 @@ class _IntroState extends State<Intro> {
             height: 50,
             width: double.infinity,
             child: Container(
-              margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Color.fromRGBO(95, 215, 149, 100),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "사탕 모으러가기",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    textAlign: TextAlign.center,
+              margin: EdgeInsets.fromLTRB(10, 0, 10, 5),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromRGBO(95, 215, 149, 100),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                ],
+                ),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Register()));
+                },
+                child: Text(
+                  "사탕 모으러가기",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ),
-          Container(height: 3),
-          Text(
-            '기존 계정으로 로그인하기',
-            style: TextStyle(fontSize: 9),
-          )
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Login()));
+            },
+            style: ButtonStyle(
+                overlayColor: WidgetStatePropertyAll(Colors.transparent)),
+            child: Text(
+              '기존 계정으로 로그인하기',
+              style: TextStyle(
+                fontSize: 9,
+                color: Colors.black,
+              ),
+            ),
+          ),
         ],
       ),
     );
