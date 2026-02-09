@@ -56,7 +56,7 @@ class _IntroState extends State<Intro> {
               margin: EdgeInsets.fromLTRB(10, 0, 10, 5),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromRGBO(95, 215, 149, 100),
+                  backgroundColor: Color.fromRGBO(90, 209, 144, 1),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),

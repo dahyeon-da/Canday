@@ -44,6 +44,7 @@ exports.register = async (req, res) => {
     userBirth,
     salt
   );
+  console.log(affectedRows);
 
   // 회원가입을 성공적으로 완료했을 때
   if (affectedRows > 0) {

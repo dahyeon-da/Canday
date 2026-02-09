@@ -1,4 +1,7 @@
+import 'package:canday_frontend/src/controller/userController.dart';
+import 'package:canday_frontend/src/screen/diary/diaryMain.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -8,12 +11,38 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-//   final userController = Get.put(UserController());
+  final userController = Get.put(UserController());
 
-//   // '일기 쓰러가기' 즉 회원가입 버튼을 눌렀을 때 실행되는 함수
-// _submitForm() async {
-//   final String userEmailAdress =
-// }
+  final TextEditingController _userEmailAdressController =
+      TextEditingController();
+  final TextEditingController _userPasswordController = TextEditingController();
+  final TextEditingController _userPasswordCheckController =
+      TextEditingController();
+  final TextEditingController _userNicknameController = TextEditingController();
+  final TextEditingController _userBirthController = TextEditingController();
+
+  // '일기 쓰러가기' 즉 회원가입 버튼을 눌렀을 때 실행되는 함수
+  _submitForm() async {
+    final String userEmailAdress = _userEmailAdressController.text;
+    final String userPassword = _userPasswordController.text;
+    final String userPasswordCheck = _userPasswordCheckController.text;
+    final String userNickname = _userNicknameController.text;
+    final String userBirth = _userBirthController.text;
+
+    if (userPassword != userPasswordCheck) {
+      const message = "비밀번호가 서로 달라요";
+    }
+
+    // 회원가입 통신 로직
+    bool result = await userController.register(
+        userEmailAdress, userPassword, userNickname, userBirth);
+
+    // 회원가입 성공 시 다음 화면으로 이동처리
+    if (result) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Diarymain()));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,16 +78,17 @@ class _RegisterState extends State<Register> {
           Container(
             margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
             child: TextFormField(
+              controller: _userEmailAdressController,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 hintText: "이메일",
                 hintStyle: TextStyle(color: Color.fromRGBO(184, 194, 176, 100)),
                 enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                        color: Color.fromRGBO(206, 250, 163, 100), width: 2)),
+                        color: Color.fromRGBO(206, 250, 163, 1), width: 1)),
                 focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                        color: Color.fromRGBO(132, 219, 46, 1), width: 2.5)),
+                        color: Color.fromRGBO(132, 219, 46, 1), width: 2)),
               ),
             ),
           ),
@@ -67,6 +97,7 @@ class _RegisterState extends State<Register> {
           Container(
             margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
             child: TextFormField(
+              controller: _userPasswordController,
               keyboardType: TextInputType.visiblePassword,
               obscureText: true,
               decoration: InputDecoration(
@@ -74,10 +105,10 @@ class _RegisterState extends State<Register> {
                 hintStyle: TextStyle(color: Color.fromRGBO(184, 194, 176, 100)),
                 enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                        color: Color.fromRGBO(206, 250, 163, 100), width: 2)),
+                        color: Color.fromRGBO(206, 250, 163, 1), width: 1)),
                 focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                        color: Color.fromRGBO(132, 219, 46, 1), width: 2.5)),
+                        color: Color.fromRGBO(132, 219, 46, 1), width: 2)),
               ),
             ),
           ),
@@ -86,6 +117,7 @@ class _RegisterState extends State<Register> {
           Container(
             margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
             child: TextFormField(
+              controller: _userPasswordCheckController,
               keyboardType: TextInputType.visiblePassword,
               obscureText: true,
               decoration: InputDecoration(
@@ -93,10 +125,10 @@ class _RegisterState extends State<Register> {
                 hintStyle: TextStyle(color: Color.fromRGBO(184, 194, 176, 100)),
                 enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                        color: Color.fromRGBO(206, 250, 163, 100), width: 2)),
+                        color: Color.fromRGBO(206, 250, 163, 1), width: 1)),
                 focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                        color: Color.fromRGBO(132, 219, 46, 1), width: 2.5)),
+                        color: Color.fromRGBO(132, 219, 46, 1), width: 2)),
               ),
             ),
           ),
@@ -111,10 +143,10 @@ class _RegisterState extends State<Register> {
                 hintStyle: TextStyle(color: Color.fromRGBO(184, 194, 176, 100)),
                 enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                        color: Color.fromRGBO(206, 250, 163, 100), width: 2)),
+                        color: Color.fromRGBO(206, 250, 163, 1), width: 1)),
                 focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                        color: Color.fromRGBO(132, 219, 46, 1), width: 2.5)),
+                        color: Color.fromRGBO(132, 219, 46, 1), width: 2)),
               ),
             ),
           ),
@@ -123,16 +155,16 @@ class _RegisterState extends State<Register> {
           Container(
             margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
             child: TextFormField(
-              keyboardType: TextInputType.datetime,
+              controller: _userBirthController,
               decoration: InputDecoration(
                 hintText: "생일",
                 hintStyle: TextStyle(color: Color.fromRGBO(184, 194, 176, 100)),
                 enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                        color: Color.fromRGBO(206, 250, 163, 100), width: 2)),
+                        color: Color.fromRGBO(206, 250, 163, 1), width: 1)),
                 focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                        color: Color.fromRGBO(132, 219, 46, 1), width: 2.5)),
+                        color: Color.fromRGBO(132, 219, 46, 1), width: 2)),
               ),
             ),
           ),
@@ -143,7 +175,7 @@ class _RegisterState extends State<Register> {
             width: double.infinity,
             margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: _submitForm,
               child: Container(
                 child: Text(
                   "일기 쓰러가기",
@@ -155,15 +187,17 @@ class _RegisterState extends State<Register> {
                 margin: EdgeInsets.fromLTRB(0, 13, 0, 13),
               ),
               style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromRGBO(193, 240, 146, 1),
+                  backgroundColor: Color.fromRGBO(193, 240, 147, 1),
                   shadowColor: Colors.transparent,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   )),
             ),
           ),
+          Container(height: 20)
         ],
       ),
     );
   }
 }
+

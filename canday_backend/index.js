@@ -1,9 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 3000;
 
-const router = require('./src/router');
+const router = require("./src/router");
+
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Accept", "Authorization"],
+  }),
+);
 
 // JSON 형식의 본문을 처리하기 위한 미들웨어
 app.use(bodyParser.json());
