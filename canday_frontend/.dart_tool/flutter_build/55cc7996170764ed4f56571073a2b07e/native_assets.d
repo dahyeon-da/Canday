@@ -1,1 +1,0 @@
- C:\\workspace\\canday\\canday_frontend\\.dart_tool\\flutter_build\\55cc7996170764ed4f56571073a2b07e\\native_assets.yaml: 
