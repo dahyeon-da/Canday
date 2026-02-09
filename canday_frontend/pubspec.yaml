@@ -79,6 +79,13 @@ flutter:
     - family: handWritten1
       fonts:
         - asset: assets/fonts/handWritten1.ttf
+        - asset: assets/fonts/handWritten1.ttf
+          weight: 600
+        - asset: assets/fonts/handWritten1.ttf
+          weight: 900
+    - family: handWritten2
+      fonts:
+        - asset: assets/fonts/handWritten2.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

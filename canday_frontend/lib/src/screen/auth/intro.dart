@@ -19,7 +19,7 @@ class _IntroState extends State<Intro> {
           Container(
             width: double.infinity,
             height: 500,
-            margin: EdgeInsets.only(bottom: 20),
+            margin: EdgeInsets.only(bottom: 10),
             child: Image.asset(
               'assets/introImage1.jpg',
               fit: BoxFit.cover,
@@ -29,31 +29,34 @@ class _IntroState extends State<Intro> {
             children: [
               Row(
                 children: [
-                  Container(width: 15),
+                  Container(width: 10),
                   Text(
                     "‘사탕조각에 오신것을 환영합니다",
-                    style: TextStyle(fontSize: 13),
+                    style: TextStyle(
+                      fontSize: 23,
+                      fontFamily: "handWritten1",
+                    ),
                   ),
                 ],
               ),
-              Container(height: 7),
+              Container(height: 3),
               Row(
                 children: [
-                  Container(width: 15),
+                  Container(width: 10),
                   Text(
                     "사탕조각과 함께 하루하루의 일기를 모아보세요’",
-                    style: TextStyle(fontSize: 13),
+                    style: TextStyle(fontSize: 23, fontFamily: "handWritten1"),
                   ),
                 ],
               )
             ],
           ),
-          Container(height: 30),
+          Container(height: 20),
           Container(
             height: 50,
             width: double.infinity,
             child: Container(
-              margin: EdgeInsets.fromLTRB(10, 0, 10, 5),
+              margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color.fromRGBO(90, 209, 144, 1),
@@ -69,8 +72,9 @@ class _IntroState extends State<Intro> {
                   "사탕 모으러가기",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 17,
+                    fontSize: 22,
                     fontWeight: FontWeight.w600,
+                    fontFamily: "handWritten2",
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -87,8 +91,9 @@ class _IntroState extends State<Intro> {
             child: Text(
               '기존 계정으로 로그인하기',
               style: TextStyle(
-                fontSize: 9,
+                fontSize: 14,
                 color: Colors.black,
+                fontFamily: "handWritten2",
               ),
             ),
           ),

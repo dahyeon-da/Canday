@@ -82,7 +82,12 @@ class _RegisterState extends State<Register> {
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 hintText: "이메일",
-                hintStyle: TextStyle(color: Color.fromRGBO(184, 194, 176, 100)),
+                hintStyle: TextStyle(
+                  color: Color.fromRGBO(184, 194, 176, 100),
+                  fontFamily: "handWritten2",
+                  fontWeight: FontWeight.w300,
+                  fontSize: 21,
+                ),
                 enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                         color: Color.fromRGBO(206, 250, 163, 1), width: 1)),
@@ -102,7 +107,12 @@ class _RegisterState extends State<Register> {
               obscureText: true,
               decoration: InputDecoration(
                 hintText: "비밀번호",
-                hintStyle: TextStyle(color: Color.fromRGBO(184, 194, 176, 100)),
+                hintStyle: TextStyle(
+                  color: Color.fromRGBO(184, 194, 176, 100),
+                  fontFamily: "handWritten2",
+                  fontWeight: FontWeight.w300,
+                  fontSize: 21,
+                ),
                 enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                         color: Color.fromRGBO(206, 250, 163, 1), width: 1)),
@@ -122,7 +132,12 @@ class _RegisterState extends State<Register> {
               obscureText: true,
               decoration: InputDecoration(
                 hintText: "비밀번호 확인",
-                hintStyle: TextStyle(color: Color.fromRGBO(184, 194, 176, 100)),
+                hintStyle: TextStyle(
+                  color: Color.fromRGBO(184, 194, 176, 100),
+                  fontFamily: "handWritten2",
+                  fontWeight: FontWeight.w300,
+                  fontSize: 21,
+                ),
                 enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                         color: Color.fromRGBO(206, 250, 163, 1), width: 1)),
@@ -140,7 +155,12 @@ class _RegisterState extends State<Register> {
               keyboardType: TextInputType.name,
               decoration: InputDecoration(
                 hintText: "이름",
-                hintStyle: TextStyle(color: Color.fromRGBO(184, 194, 176, 100)),
+                hintStyle: TextStyle(
+                  color: Color.fromRGBO(184, 194, 176, 100),
+                  fontFamily: "handWritten2",
+                  fontWeight: FontWeight.w300,
+                  fontSize: 21,
+                ),
                 enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                         color: Color.fromRGBO(206, 250, 163, 1), width: 1)),
@@ -158,7 +178,12 @@ class _RegisterState extends State<Register> {
               controller: _userBirthController,
               decoration: InputDecoration(
                 hintText: "생일",
-                hintStyle: TextStyle(color: Color.fromRGBO(184, 194, 176, 100)),
+                hintStyle: TextStyle(
+                  color: Color.fromRGBO(184, 194, 176, 100),
+                  fontFamily: "handWritten2",
+                  fontWeight: FontWeight.w300,
+                  fontSize: 21,
+                ),
                 enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                         color: Color.fromRGBO(206, 250, 163, 1), width: 1)),
@@ -180,9 +205,10 @@ class _RegisterState extends State<Register> {
                 child: Text(
                   "일기 쓰러가기",
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 22,
                       fontWeight: FontWeight.w600,
-                      color: Colors.white),
+                      color: Colors.white,
+                      fontFamily: "handWritten2"),
                 ),
                 margin: EdgeInsets.fromLTRB(0, 13, 0, 13),
               ),
