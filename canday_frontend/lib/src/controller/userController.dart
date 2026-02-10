@@ -23,4 +23,17 @@ class UserController extends GetxController {
       return false;
     }
   }
+
+  // 로그인을 시도하는 함수
+  Future<bool> login(String userEmailAdress, String userPassword) async {
+    try {
+      String token = await userConnect.sendLogin(userEmailAdress, userPassword);
+
+      await _storage.write('token', token);
+      return true;
+    } catch (e) {
+      print('error: $e');
+      return false;
+    }
+  }
 }

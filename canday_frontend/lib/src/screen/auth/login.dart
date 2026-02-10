@@ -1,5 +1,8 @@
+import 'package:canday_frontend/src/controller/userController.dart';
 import 'package:canday_frontend/src/screen/auth/register.dart';
+import 'package:canday_frontend/src/screen/diary/diaryMain.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -9,6 +12,27 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+final userController = Get.put(UserController());
+
+  final TextEditingController _userEmailAdressController =
+      TextEditingController();
+  final TextEditingController _userPasswordController = TextEditingController();
+
+  // '일기 쓰러가기' 즉 로그인 버튼을 눌렀을 때 실행되는 함수
+  _submitForm() async {
+    final String userEmailAdress = _userEmailAdressController.text;
+    final String userPassword = _userPasswordController.text;
+
+    // 로그인 통신 로직
+    bool result = await userController.login(userEmailAdress, userPassword);
+
+    // 로그인 성공 시 다음 화면으로 이동처리
+    if (result) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Diarymain()));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +68,7 @@ class _LoginState extends State<Login> {
             Container(
               margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
               child: TextFormField(
-                // controller: _userEmailAdressController,
+                controller: _userEmailAdressController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   hintText: "이메일",
@@ -69,7 +93,7 @@ class _LoginState extends State<Login> {
             Container(
               margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
               child: TextFormField(
-                // controller: _userPasswordController,
+                controller: _userPasswordController,
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: true,
                 decoration: InputDecoration(
@@ -97,7 +121,7 @@ class _LoginState extends State<Login> {
               width: double.infinity,
               margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: _submitForm,
                 child: Container(
                   child: Text(
                     "일기 쓰러가기",
