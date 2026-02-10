@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:canday_frontend/src/screen/auth/login.dart';
 import 'package:canday_frontend/src/screen/auth/register.dart';
 import 'package:flutter/material.dart';
@@ -10,19 +12,56 @@ class Intro extends StatefulWidget {
 }
 
 class _IntroState extends State<Intro> {
+  int currentPage = 0;
+  PageController _pageController = PageController(
+    initialPage: 0,
+  );
+
+  List itemList = ["1", "2", "3", "4", "5", "6", "7"];
+
+  @override
+  void initState() {
+    super.initState();
+    itemList.shuffle();
+
+    Timer.periodic(Duration(seconds: 4), (Timer timer) {
+      if (currentPage < itemList.length - 1) {
+        currentPage++;
+      } else {
+        currentPage = 0;
+      }
+
+      _pageController.animateToPage(
+        currentPage,
+        duration: Duration(milliseconds: 500),
+        curve: Curves.easeIn,
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          Container(
-            width: double.infinity,
-            height: 500,
-            margin: EdgeInsets.only(bottom: 10),
-            child: Image.asset(
-              'assets/introImage1.jpg',
-              fit: BoxFit.cover,
+          Expanded(
+            child: PageView.builder(
+              pageSnapping: true,
+              controller: _pageController,
+              itemCount: itemList.length,
+              onPageChanged: (value) {},
+              itemBuilder: (context, index) {
+                return Container(
+                  width: double.infinity,
+                  height: 500,
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: Image.asset(
+                    'assets/introImage' + itemList[index] + '.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                );
+              },
             ),
           ),
           Column(
