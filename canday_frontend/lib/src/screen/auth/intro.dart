@@ -54,8 +54,8 @@ class _IntroState extends State<Intro> {
               itemBuilder: (context, index) {
                 return Container(
                   width: double.infinity,
-                  height: 500,
-                  margin: EdgeInsets.only(bottom: 10),
+                  height: 350,
+                  // margin: EdgeInsets.only(bottom: 10),
                   child: Image.asset(
                     'assets/introImage' + itemList[index] + '.jpg',
                     fit: BoxFit.cover,
@@ -78,7 +78,7 @@ class _IntroState extends State<Intro> {
                   ),
                 ],
               ),
-              Container(height: 3),
+              // Container(height: 3),
               Row(
                 children: [
                   Container(width: 10),

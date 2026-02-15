@@ -33,24 +33,31 @@ class _DiarymainState extends State<Diarymain> {
         ],
       ),
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      body: Container(
-        margin: const EdgeInsets.fromLTRB(20, 50, 20, 20),
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 12)],
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildHeader(),
-            const SizedBox(height: 20),
-            _buildWeekDays(),
-            const SizedBox(height: 10),
-            _buildCalendar(),
-          ],
-        ),
+      body: ListView(
+        children: [
+          Container(
+            margin: const EdgeInsets.fromLTRB(20, 40, 20, 20),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: const [
+                BoxShadow(color: Colors.black12, blurRadius: 12)
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _buildHeader(),
+                const SizedBox(height: 20),
+                _buildWeekDays(),
+                const SizedBox(height: 10),
+                _buildCalendar(),
+              ],
+            ),
+          ),
+          _todayDiary(),
+        ],
       ),
     );
   }
@@ -75,6 +82,7 @@ class _DiarymainState extends State<Diarymain> {
             fontSize: 18,
             fontWeight: FontWeight.w600,
             color: Colors.green,
+              fontFamily: 'normalFont1'
           ),
         ),
         IconButton(
@@ -99,11 +107,14 @@ class _DiarymainState extends State<Diarymain> {
       children: List.generate(days.length, (index) {
         Color color = Colors.black;
         if (index == 0) color = Colors.red;
-        if (index == 6) color = Colors.deepPurple;
+        if (index == 6) color = const Color.fromARGB(255, 49, 69, 219);
 
         return Text(
           days[index],
-          style: TextStyle(fontWeight: FontWeight.bold, color: color),
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: color,
+              fontFamily: 'normalFont1'),
         );
       }),
     );
@@ -187,6 +198,7 @@ class _DiarymainState extends State<Diarymain> {
             style: TextStyle(
               fontWeight: isToday ? FontWeight.bold : FontWeight.normal,
               color: isToday ? Colors.green : Colors.black,
+              fontFamily: 'normalFont1',
             ),
           ),
         ],
@@ -197,5 +209,75 @@ class _DiarymainState extends State<Diarymain> {
   bool _isSameDate(DateTime? a, DateTime? b) {
     if (a == null || b == null) return false;
     return a.year == b.year && a.month == b.month && a.day == b.day;
+  }
+
+  Widget _todayDiary() {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: Color.fromRGBO(122, 207, 76, 1),
+        ),
+      ),
+      margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+      child: Column(
+        children: [
+          Container(
+            margin: EdgeInsets.fromLTRB(15, 0, 0, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Text("오늘의 ",
+                        style: TextStyle(
+                            color: Color.fromRGBO(93, 93, 93, 1),
+                            fontSize: 20,
+                            fontFamily: 'handWritten2',
+                            fontWeight: FontWeight.bold)),
+                    Text(
+                      "기쁨",
+                      style: TextStyle(
+                          color: Color.fromRGBO(122, 207, 76, 1),
+                          fontSize: 20,
+                          fontFamily: 'handWritten2',
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "사탕",
+                      style: TextStyle(
+                          color: Color.fromRGBO(93, 93, 93, 1),
+                          fontSize: 20,
+                          fontFamily: 'handWritten2',
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: Image.asset('assets/edit-tools.png',
+                      width: 22, height: 22),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+                border: Border.all(color: Color.fromRGBO(122, 207, 76, 1))),
+          ),
+          Container(
+            margin: EdgeInsets.all(13),
+            child: Text(
+              "오늘은 이천에 일을 갔다~ 일이 엄청 힘들었다~ 이렇게 저렇게 이렇게 저렇게 이렇게 저렇게 이렇게 저렇게 이렇게 저렇게 이렇게 저렇게 이렇게 저렇게 이렇게 저렇게이렇게 저렇게이렇게 저렇게이렇게 저렇게이렇게 저렇게",
+              style: TextStyle(
+                  color: Color.fromRGBO(93, 93, 93, 1),
+                  fontSize: 17,
+                  fontFamily: 'handWritten2',
+                  fontWeight: FontWeight.bold),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

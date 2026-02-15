@@ -71,6 +71,7 @@ flutter:
     - assets/introImage5.jpg
     - assets/introImage6.jpg
     - assets/introImage7.jpg
+    - assets/edit-tools.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -94,6 +95,9 @@ flutter:
     - family: handWritten2
       fonts:
         - asset: assets/fonts/handWritten2.ttf
+    - family: normalFont1
+      fonts:
+        - asset: assets/fonts/normalFont1.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
