@@ -43,9 +43,10 @@ class _IntroState extends State<Intro> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
+      body: ListView(
         children: [
-          Expanded(
+          SizedBox(
+            height: 580,
             child: PageView.builder(
               pageSnapping: true,
               controller: _pageController,
@@ -54,8 +55,7 @@ class _IntroState extends State<Intro> {
               itemBuilder: (context, index) {
                 return Container(
                   width: double.infinity,
-                  height: 350,
-                  // margin: EdgeInsets.only(bottom: 10),
+                  margin: EdgeInsets.only(bottom: 10),
                   child: Image.asset(
                     'assets/introImage' + itemList[index] + '.jpg',
                     fit: BoxFit.cover,
