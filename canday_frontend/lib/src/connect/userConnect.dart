@@ -1,9 +1,6 @@
 import 'package:canday_frontend/shared/global.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-
-final GetStorage _getStorage = GetStorage();
 
 // 회원 통신에 관한 클래스
 class UserConnect extends GetConnect {

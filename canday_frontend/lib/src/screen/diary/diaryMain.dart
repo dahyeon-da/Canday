@@ -1,4 +1,6 @@
+import 'package:canday_frontend/src/controller/diaryController.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class Diarymain extends StatefulWidget {
@@ -9,6 +11,9 @@ class Diarymain extends StatefulWidget {
 }
 
 class _DiarymainState extends State<Diarymain> {
+  bool isLoading = true;
+  late Map<String, dynamic> results = {};
+
   DateTime _focusedMonth = DateTime.now();
   DateTime? _selectedDate;
 
@@ -19,6 +24,22 @@ class _DiarymainState extends State<Diarymain> {
     DateTime(2026, 4, 19): Colors.yellow,
     DateTime(2026, 4, 20): Colors.yellow,
   };
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    final diaryController = Get.put(DiaryController());
+    results = await diaryController.diaryShow(1);
+    print(results);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,11 +100,10 @@ class _DiarymainState extends State<Diarymain> {
         Text(
           DateFormat('MMMM yyyy').format(_focusedMonth),
           style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            color: Colors.green,
-              fontFamily: 'normalFont1'
-          ),
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Colors.green,
+              fontFamily: 'normalFont1'),
         ),
         IconButton(
           icon: const Icon(Icons.chevron_right, color: Colors.green),
