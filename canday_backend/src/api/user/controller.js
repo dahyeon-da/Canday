@@ -98,6 +98,7 @@ exports.login = async (req, res) => {
         userEmailAdress: userData.userEmailAdress,
         userNickname: userData.userNickname,
         userBirth: userData.userBirth,
+        userNum: userData.userNum,
       };
       return res.status(StatusCodes.OK).json({
         code: StatusCodes.OK,

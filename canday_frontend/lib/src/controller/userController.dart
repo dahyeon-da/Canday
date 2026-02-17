@@ -10,30 +10,35 @@ class UserController extends GetxController {
   final userConnect = Get.put(UserConnect());
 
   // 회원가입을 시도하는 함수
-  Future<bool> register(String userEmailAdress, String userPassword,
+  Future<Map<String, dynamic>> register(String userEmailAdress,
+      String userPassword,
       String userNickname, String userBirth) async {
     try {
-      String token = await userConnect.sendRegister(
+      Map<String, dynamic> data = await userConnect.sendRegister(
           userEmailAdress, userPassword, userNickname, userBirth);
+      String token = data['token'];
 
       await _storage.write('token', token);
-      return true;
+      return data['data'];
     } catch (e) {
       print('error: $e');
-      return false;
+      return {};
     }
   }
 
   // 로그인을 시도하는 함수
-  Future<bool> login(String userEmailAdress, String userPassword) async {
+  Future<Map<String, dynamic>> login(
+      String userEmailAdress, String userPassword) async {
     try {
-      String token = await userConnect.sendLogin(userEmailAdress, userPassword);
+      Map<String, dynamic> data =
+          await userConnect.sendLogin(userEmailAdress, userPassword);
+      String token = data['token'];
 
       await _storage.write('token', token);
-      return true;
+      return data['data'];
     } catch (e) {
       print('error: $e');
-      return false;
+      return {};
     }
   }
 }

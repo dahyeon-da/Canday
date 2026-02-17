@@ -24,12 +24,15 @@ final userController = Get.put(UserController());
     final String userPassword = _userPasswordController.text;
 
     // 로그인 통신 로직
-    bool result = await userController.login(userEmailAdress, userPassword);
+    Map<String, dynamic> result =
+        await userController.login(userEmailAdress, userPassword);
 
     // 로그인 성공 시 다음 화면으로 이동처리
-    if (result) {
+    if (result.isNotEmpty) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Diarymain()));
+          context,
+          MaterialPageRoute(
+              builder: (context) => Diarymain(userNum: result['userNum'])));
     }
   }
 

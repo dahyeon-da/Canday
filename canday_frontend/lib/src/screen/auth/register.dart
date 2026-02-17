@@ -34,13 +34,15 @@ class _RegisterState extends State<Register> {
     }
 
     // 회원가입 통신 로직
-    bool result = await userController.register(
+    Map<String, dynamic> result = await userController.register(
         userEmailAdress, userPassword, userNickname, userBirth);
 
     // 회원가입 성공 시 다음 화면으로 이동처리
-    if (result) {
+    if (result.isNotEmpty) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Diarymain()));
+          context,
+          MaterialPageRoute(
+              builder: (context) => Diarymain(userNum: result['userNum'])));
     }
   }
 

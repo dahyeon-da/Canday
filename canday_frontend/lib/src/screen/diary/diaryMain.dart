@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class Diarymain extends StatefulWidget {
-  const Diarymain({super.key});
+  final int userNum;
+
+  const Diarymain({super.key, required this.userNum});
 
   @override
   State<Diarymain> createState() => _DiarymainState();
@@ -37,7 +39,7 @@ class _DiarymainState extends State<Diarymain> {
     });
 
     final diaryController = Get.put(DiaryController());
-    results = await diaryController.diaryShow(1);
+    results = await diaryController.diaryShow(widget.userNum);
     print(results);
   }
 

@@ -29,7 +29,7 @@ class UserConnect extends GetConnect {
     Map<String, dynamic> body = response.body;
 
     if (body['code'] == 201) {
-      return body['token']; // 회원가입 성공 시 토큰 반환
+      return body;
     } else if (body['code'] == 403) {
       ScaffoldMessenger.of(Get.context!).showSnackBar(
         SnackBar(
@@ -52,7 +52,7 @@ class UserConnect extends GetConnect {
     Map<String, dynamic> body = response.body;
 
     if (body['code'] == 200) {
-      return body['token']; // 로그인 성공 시 토큰 반환
+      return body;
     } else if (body['code'] == 404) {
       ScaffoldMessenger.of(Get.context!).showSnackBar(
         SnackBar(
