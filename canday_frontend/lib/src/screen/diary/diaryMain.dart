@@ -1,4 +1,5 @@
 import 'package:canday_frontend/src/controller/diaryController.dart';
+import 'package:canday_frontend/src/model/diaryModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -14,18 +15,10 @@ class Diarymain extends StatefulWidget {
 
 class _DiarymainState extends State<Diarymain> {
   bool isLoading = true;
-  late Map<String, dynamic> results = {};
-
+  late List<DiaryListModel> results = [];
   DateTime _focusedMonth = DateTime.now();
   DateTime? _selectedDate;
-
-  // 일기 작성한 날짜 표시
-  final Map<DateTime, Color> eventDates = {
-    DateTime(2026, 2, 11): Colors.green,
-    DateTime(2026, 4, 17): Colors.green,
-    DateTime(2026, 4, 19): Colors.yellow,
-    DateTime(2026, 4, 20): Colors.yellow,
-  };
+  Map<String, Color> eventDates = {};
 
   @override
   void initState() {
@@ -39,9 +32,40 @@ class _DiarymainState extends State<Diarymain> {
     });
 
     final diaryController = Get.put(DiaryController());
-    results = await diaryController.diaryShow(widget.userNum);
-    print(results);
+
+    List<DiaryListModel> diaryList =
+        await diaryController.diaryShow(widget.userNum);
+
+    print('diaryList $diaryList');
+
+    Map<String, Color> tempEvents = {};
+
+    for (var diary in diaryList) {
+      DateTime date = diary.diaryDate!.toLocal();
+
+      DateTime onlyDate = DateTime(date.year, date.month, date.day);
+
+      String key = "${onlyDate.year}-"
+          "${onlyDate.month.toString().padLeft(2, '0')}-"
+          "${onlyDate.day.toString().padLeft(2, '0')}";
+
+      tempEvents[key] = Colors.green;
+    }
+
+    setState(() {
+      eventDates = tempEvents;
+
+      if (tempEvents.isNotEmpty) {
+        DateTime firstDate = DateTime.parse(tempEvents.keys.first);
+
+        _focusedMonth = DateTime(firstDate.year, firstDate.month, 1);
+      }
+
+      isLoading = false;
+    });
+
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -182,9 +206,11 @@ class _DiarymainState extends State<Diarymain> {
     final isToday = _isSameDate(date, DateTime.now());
     final isSelected = _isSameDate(date, _selectedDate);
 
-    final eventColor = eventDates.keys.any((d) => _isSameDate(d, date))
-        ? eventDates[eventDates.keys.firstWhere((d) => _isSameDate(d, date))]
-        : null;
+    String key = "${date.year}-"
+        "${date.month.toString().padLeft(2, '0')}-"
+        "${date.day.toString().padLeft(2, '0')}";
+
+    final eventColor = eventDates[key];
 
     return GestureDetector(
       onTap: () {
@@ -290,7 +316,7 @@ class _DiarymainState extends State<Diarymain> {
           Container(
             margin: EdgeInsets.all(13),
             child: Text(
-              "오늘은 이천에 일을 갔다~ 일이 엄청 힘들었다~ 이렇게 저렇게 이렇게 저렇게 이렇게 저렇게 이렇게 저렇게 이렇게 저렇게 이렇게 저렇게 이렇게 저렇게 이렇게 저렇게이렇게 저렇게이렇게 저렇게이렇게 저렇게이렇게 저렇게",
+              "일기를 적어보자일기를 적어보자일기를 적어보자일기를 적어보자일기를 적어보자일기를 적어보자",
               style: TextStyle(
                   color: Color.fromRGBO(93, 93, 93, 1),
                   fontSize: 17,

@@ -9,17 +9,17 @@
 class DiaryListModel {
   int? diaryNum;
   DateTime? diaryDate;
+  int? userNum;
   String? emotionImage;
   String? emotionColorCode;
   String? emotionKorean;
-  int? userNum;
 
   DiaryListModel.fromJson(Map m) {
     diaryNum = m['diaryNum'];
-    diaryDate = m['diaryDate'];
+    diaryDate = DateTime.parse(m['diaryDate']);
+    userNum = m['userNum'];
     emotionImage = m['emotionImage'];
     emotionColorCode = m['emotionColorCode'];
     emotionKorean = m['emotionKorean'];
-    userNum = m['userNum'];
   }
 }

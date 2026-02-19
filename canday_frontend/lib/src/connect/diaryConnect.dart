@@ -27,13 +27,15 @@ class DiaryConnect extends GetConnect {
   // 일기 목록 불러오기 통신
   Future showDiaryList(int userNum) async {
     try {
+      print(await getToken);
       Response<dynamic> response = await get('/diary/user/show/${userNum}',
           headers: {'Authorization': await getToken});
 
       Map<String, dynamic> body = response.body;
+      print("body: $body");
 
       if (body['code'] == 200) {
-        print(body);
+        print('resultsssss: $body');
         return body;
       } else if (body['code'] == 404) {
         ScaffoldMessenger.of(Get.context!).showSnackBar(

@@ -8,21 +8,17 @@ class DiaryController extends GetxController {
   final diaryConnect = Get.put(DiaryConnect());
 
   // 다이어리 목록 불러오기를 시도하는 함수
-  Future<Map<String, dynamic>> diaryShow(int userNum) async {
+  Future<List<DiaryListModel>> diaryShow(int userNum) async {
     try {
-      Map<String, dynamic> results = await diaryConnect.showDiaryList(userNum);
-      List<dynamic> diarys = results['body'];
-      List<DiaryListModel> diary = [];
-      for (var result in diarys) {
-        diary.add(DiaryListModel.fromJson(result));
-      }
+      Map<String, dynamic> response = await diaryConnect.showDiaryList(userNum);
 
-      results = {"diaryList": diary};
-      print(results);
-      return results;
+      List<dynamic> diarys = response['data'];
+
+      return diarys.map((e) => DiaryListModel.fromJson(e)).toList();
     } catch (e) {
       print('error $e');
-      return {"diaryList": []};
+      return [];
     }
   }
+
 }

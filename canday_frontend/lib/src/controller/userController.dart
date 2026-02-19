@@ -11,8 +11,7 @@ class UserController extends GetxController {
 
   // 회원가입을 시도하는 함수
   Future<Map<String, dynamic>> register(String userEmailAdress,
-      String userPassword,
-      String userNickname, String userBirth) async {
+      String userPassword, String userNickname, String userBirth) async {
     try {
       Map<String, dynamic> data = await userConnect.sendRegister(
           userEmailAdress, userPassword, userNickname, userBirth);
