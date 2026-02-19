@@ -316,7 +316,7 @@ class _DiarymainState extends State<Diarymain> {
           Container(
             margin: EdgeInsets.all(13),
             child: Text(
-              "일기를 적어보자일기를 적어보자일기를 적어보자일기를 적어보자일기를 적어보자일기를 적어보자 안녕하세요?",
+              "일기를 적어보자일기를 적어보자일기를 적어보자일기를 적어보자일기를 적어보자일기를 적어보자 안녕하세요?안녕하세요?",
               style: TextStyle(
                   color: Color.fromRGBO(93, 93, 93, 1),
                   fontSize: 17,
