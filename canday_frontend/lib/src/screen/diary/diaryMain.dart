@@ -24,6 +24,7 @@ class _DiarymainState extends State<Diarymain> {
   DateTime _focusedMonth = DateTime.now();
   DateTime? _selectedDate;
   Map<String, Color> eventDates = {};
+  late List<DiaryListModel> diaryList = [];
 
   // 다이어리 디테일을 위한 변수
   Map<String, dynamic> detailData = {};
@@ -39,8 +40,7 @@ class _DiarymainState extends State<Diarymain> {
     setState(() {
       isLoading = true;
     });
-
-    List<DiaryListModel> diaryList =
+    diaryList =
         await diaryController.diaryShow(widget.userNum);
 
     print('diaryList $diaryList');
@@ -227,10 +227,32 @@ class _DiarymainState extends State<Diarymain> {
     final eventColor = eventDates[key];
 
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
         setState(() {
           _selectedDate = date;
         });
+
+        DiaryListModel? selectedDiary;
+
+        // 선택한 날짜와 같은 diary 찾기
+        try {
+          selectedDiary = diaryList.firstWhere(
+            (diary) {
+              DateTime diaryDate = diary.diaryDate!.toLocal();
+              return diaryDate.year == date.year &&
+                  diaryDate.month == date.month &&
+                  diaryDate.day == date.day;
+            },
+          );
+        } catch (e) {
+          selectedDiary = null;
+        }
+
+        print('select: $selectedDiary');
+
+        if (selectedDiary != null) {
+          await showDetail(selectedDiary.diaryNum!);
+        }
       },
       child: Stack(
         alignment: Alignment.center,
@@ -316,9 +338,7 @@ class _DiarymainState extends State<Diarymain> {
                   ],
                 ),
                 IconButton(
-                  onPressed: () async {
-                    await showDetail(5);
-                  },
+                  onPressed: () {},
                   icon: Image.asset('assets/edit-tools.png',
                       width: 22, height: 22),
                 ),

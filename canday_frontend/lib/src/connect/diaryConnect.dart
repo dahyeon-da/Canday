@@ -32,6 +32,8 @@ class DiaryConnect extends GetConnect {
 
       Map<String, dynamic> body = response.body;
 
+      print('listData: $body');
+
       if (body['code'] == 200) {
         return body;
       } else if (body['code'] == 404) {
