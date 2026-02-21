@@ -83,7 +83,7 @@ exports.checkDiary = async (
 exports.showDiary = async(
   diaryNum
 ) => {
-  const sql = `SELECT d.diaryNum, d.diaryDate, d.diaryContent, d.diaryImageNum, e.emotionImage, e.emotionColorCode, e.emotionKorean FROM diarytable d INNER JOIN emotiontable e ON d.emotionNum = e.emotionNum WHERE d.diaryNum = ?;`;
+  const sql = `SELECT d.diaryNum, d.diaryDate, d.diaryContent, e.emotionImage, e.emotionColorCode, e.emotionKorean FROM diarytable d INNER JOIN emotiontable e ON d.emotionNum = e.emotionNum WHERE d.diaryNum = ?;`;
 
   const rows = await query(sql, [diaryNum]);
 

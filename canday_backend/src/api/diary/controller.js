@@ -148,7 +148,6 @@ exports.diaryShow = async (req, res) => {
         emotionImage: diary.emotionImage,
         emotionColorCode: diary.emotionColorCode,
         emotionKorean: diary.emotionKorean,
-        diaryImageNum: diary.diaryImageNum,
       };
 
       return res.status(StatusCodes.OK).json({

@@ -14,11 +14,19 @@ class Diarymain extends StatefulWidget {
 }
 
 class _DiarymainState extends State<Diarymain> {
+  final diaryController = Get.put(DiaryController());
+
+  // 다이어리 리스트의 데이터가 오기전에 로딩변수
   bool isLoading = true;
+
+  // 다이어리 리스트를 위한 변수
   late List<DiaryListModel> results = [];
   DateTime _focusedMonth = DateTime.now();
   DateTime? _selectedDate;
   Map<String, Color> eventDates = {};
+
+  // 다이어리 디테일을 위한 변수
+  Map<String, dynamic> detailData = {};
 
   @override
   void initState() {
@@ -26,12 +34,11 @@ class _DiarymainState extends State<Diarymain> {
     fetchData();
   }
 
+  // 다이어리 메인 켜졌을때 실행될 다이어리 목록 불러오기
   Future<void> fetchData() async {
     setState(() {
       isLoading = true;
     });
-
-    final diaryController = Get.put(DiaryController());
 
     List<DiaryListModel> diaryList =
         await diaryController.diaryShow(widget.userNum);
@@ -63,11 +70,18 @@ class _DiarymainState extends State<Diarymain> {
 
       isLoading = false;
     });
-
   }
 
-
   @override
+  // 다이어리 상세정보를 보는 함수
+  showDetail(int diaryNum) async {
+    detailData = await diaryController.diaryDetailShow(diaryNum);
+
+    print(detailData);
+
+    return detailData;
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -302,7 +316,9 @@ class _DiarymainState extends State<Diarymain> {
                   ],
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await showDetail(5);
+                  },
                   icon: Image.asset('assets/edit-tools.png',
                       width: 22, height: 22),
                 ),

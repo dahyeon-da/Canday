@@ -24,7 +24,6 @@ class UserConnect extends GetConnect {
       'userNickname': userNickname,
       'userBirth': userBirth
     });
-    print('body: ${response.body} ');
 
     Map<String, dynamic> body = response.body;
 
@@ -47,9 +46,10 @@ class UserConnect extends GetConnect {
       'userEmailAdress': userEmailAdress,
       'userPassword': userPassword,
     });
-    print('body: ${response.body} ');
 
     Map<String, dynamic> body = response.body;
+
+    print("login: $body");
 
     if (body['code'] == 200) {
       return body;

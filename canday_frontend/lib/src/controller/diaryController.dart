@@ -21,4 +21,18 @@ class DiaryController extends GetxController {
     }
   }
 
+  // 다이어리 상세정보 불러오기를 시도하는 함수
+  Future<Map<String, dynamic>> diaryDetailShow(int diaryNum) async {
+    try {
+      Map<String, dynamic> response =
+          await diaryConnect.showDiaryDetail(diaryNum);
+
+      Map<String, dynamic> data = response['data'];
+
+      print('detail: $data');
+      return data;
+    } catch (e) {
+      return {};
+    }
+  }
 }

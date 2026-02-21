@@ -98,7 +98,7 @@ final userController = Get.put(UserController());
               child: TextFormField(
                 controller: _userPasswordController,
                 keyboardType: TextInputType.visiblePassword,
-                obscureText: true,
+                // obscureText: true,
                 decoration: InputDecoration(
                   hintText: "비밀번호",
                   hintStyle:
