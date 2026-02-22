@@ -61,11 +61,7 @@ class DiaryConnect extends GetConnect {
       if (body['code'] == 200) {
         return body;
       } else if (body['code'] == 404) {
-        ScaffoldMessenger.of(Get.context!).showSnackBar(
-          SnackBar(
-            content: Text('존재하지 않는 일기입니다.'),
-          ),
-        );
+        return {};
       }
     } catch (e) {
       print('error: $e');

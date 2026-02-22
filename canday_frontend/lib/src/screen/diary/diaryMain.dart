@@ -27,6 +27,7 @@ class _DiarymainState extends State<Diarymain> {
   late List<DiaryListModel> diaryList = [];
 
   // 다이어리 디테일을 위한 변수
+  DiaryListModel? selectedDiary;
   Map<String, dynamic> detailData = {};
 
   @override
@@ -40,8 +41,7 @@ class _DiarymainState extends State<Diarymain> {
     setState(() {
       isLoading = true;
     });
-    diaryList =
-        await diaryController.diaryShow(widget.userNum);
+    diaryList = await diaryController.diaryShow(widget.userNum);
 
     print('diaryList $diaryList');
 
@@ -76,8 +76,6 @@ class _DiarymainState extends State<Diarymain> {
   // 다이어리 상세정보를 보는 함수
   showDetail(int diaryNum) async {
     detailData = await diaryController.diaryDetailShow(diaryNum);
-
-    print(detailData);
 
     return detailData;
   }
@@ -232,8 +230,6 @@ class _DiarymainState extends State<Diarymain> {
           _selectedDate = date;
         });
 
-        DiaryListModel? selectedDiary;
-
         // 선택한 날짜와 같은 diary 찾기
         try {
           selectedDiary = diaryList.firstWhere(
@@ -251,7 +247,10 @@ class _DiarymainState extends State<Diarymain> {
         print('select: $selectedDiary');
 
         if (selectedDiary != null) {
-          await showDetail(selectedDiary.diaryNum!);
+          final diaryNum = selectedDiary!.diaryNum;
+          if (diaryNum != null) {
+            await showDetail(diaryNum);
+          }
         }
       },
       child: Stack(
@@ -296,6 +295,12 @@ class _DiarymainState extends State<Diarymain> {
   }
 
   Widget _todayDiary() {
+    final content = detailData['diaryContent'];
+    final emotion = detailData['emotionKorean'];
+
+    if (selectedDiary == null) {
+      return _emptyDiaryWidget();
+    }
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
@@ -320,7 +325,7 @@ class _DiarymainState extends State<Diarymain> {
                             fontFamily: 'handWritten2',
                             fontWeight: FontWeight.bold)),
                     Text(
-                      "기쁨",
+                      emotion,
                       style: TextStyle(
                           color: Color.fromRGBO(122, 207, 76, 1),
                           fontSize: 20,
@@ -352,7 +357,66 @@ class _DiarymainState extends State<Diarymain> {
           Container(
             margin: EdgeInsets.all(13),
             child: Text(
-              "일기를 적어보자일기를 적어보자일기를 적어보자일기를 적어보자일기를 적어보자일기를 적어보자 안녕하세요?안녕하세요? 다시다시",
+              content,
+              style: TextStyle(
+                  color: Color.fromRGBO(93, 93, 93, 1),
+                  fontSize: 17,
+                  fontFamily: 'handWritten2',
+                  fontWeight: FontWeight.bold),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _emptyDiaryWidget() {
+    if (_selectedDate == null) {
+      return const SizedBox(); // 또는 기본 안내 문구
+    }
+    final formattedDate = DateFormat('MM월 dd일').format(_selectedDate!);
+
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: Color.fromRGBO(122, 207, 76, 1),
+        ),
+      ),
+      margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+      child: Column(
+        children: [
+          Container(
+            margin: EdgeInsets.fromLTRB(15, 0, 0, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Text("오늘의 사탕이 없습니다.",
+                        style: TextStyle(
+                            color: Color.fromRGBO(93, 93, 93, 1),
+                            fontSize: 20,
+                            fontFamily: 'handWritten2',
+                            fontWeight: FontWeight.bold)),
+                  ],
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: Image.asset('assets/edit-tools.png',
+                      width: 22, height: 22),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+                border: Border.all(color: Color.fromRGBO(122, 207, 76, 1))),
+          ),
+          Container(
+            margin: EdgeInsets.all(13),
+            child: Text(
+              "$formattedDate의 일기 내용이 없습니다.",
               style: TextStyle(
                   color: Color.fromRGBO(93, 93, 93, 1),
                   fontSize: 17,
