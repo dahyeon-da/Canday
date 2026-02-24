@@ -1,5 +1,6 @@
 import 'package:canday_frontend/src/controller/diaryController.dart';
 import 'package:canday_frontend/src/model/diaryModel.dart';
+import 'package:canday_frontend/src/screen/diary/diaryWritePage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -62,10 +63,23 @@ class _DiarymainState extends State<Diarymain> {
     setState(() {
       eventDates = tempEvents;
 
-      if (tempEvents.isNotEmpty) {
-        DateTime firstDate = DateTime.parse(tempEvents.keys.first);
+      _selectedDate = DateTime.now();
 
-        _focusedMonth = DateTime(firstDate.year, firstDate.month, 1);
+      try {
+        selectedDiary = diaryList.firstWhere(
+          (diary) {
+            DateTime diaryDate = diary.diaryDate!.toLocal();
+            return diaryDate.year == _selectedDate!.year &&
+                diaryDate.month == _selectedDate!.month &&
+                diaryDate.day == _selectedDate!.day;
+          },
+        );
+      } catch (e) {
+        selectedDiary = null;
+      }
+
+      if (selectedDiary != null && selectedDiary!.diaryNum != null) {
+        showDetail(selectedDiary!.diaryNum!);
       }
 
       isLoading = false;
@@ -74,10 +88,12 @@ class _DiarymainState extends State<Diarymain> {
 
   @override
   // 다이어리 상세정보를 보는 함수
-  showDetail(int diaryNum) async {
-    detailData = await diaryController.diaryDetailShow(diaryNum);
+  Future<void> showDetail(int diaryNum) async {
+    final data = await diaryController.diaryDetailShow(diaryNum);
 
-    return detailData;
+    setState(() {
+      detailData = data;
+    });
   }
 
   Widget build(BuildContext context) {
@@ -295,8 +311,8 @@ class _DiarymainState extends State<Diarymain> {
   }
 
   Widget _todayDiary() {
-    final content = detailData['diaryContent'];
-    final emotion = detailData['emotionKorean'];
+    final emotion = detailData['emotionKorean'] ?? '';
+    final content = detailData['diaryContent'] ?? '';
 
     if (selectedDiary == null) {
       return _emptyDiaryWidget();
@@ -343,7 +359,12 @@ class _DiarymainState extends State<Diarymain> {
                   ],
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Diarywritepage()));
+                  },
                   icon: Image.asset('assets/edit-tools.png',
                       width: 22, height: 22),
                 ),
@@ -402,7 +423,12 @@ class _DiarymainState extends State<Diarymain> {
                   ],
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Diarywritepage()));
+                  },
                   icon: Image.asset('assets/edit-tools.png',
                       width: 22, height: 22),
                 ),

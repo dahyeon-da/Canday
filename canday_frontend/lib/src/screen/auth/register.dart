@@ -1,5 +1,5 @@
 import 'package:canday_frontend/src/controller/userController.dart';
-import 'package:canday_frontend/src/screen/diary/diaryMain.dart';
+import 'package:canday_frontend/src/screen/diary/diaryMainPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
