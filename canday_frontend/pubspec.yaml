@@ -72,6 +72,14 @@ flutter:
     - assets/introImage6.jpg
     - assets/introImage7.jpg
     - assets/edit-tools.png
+    - assets/anggro.png
+    - assets/annoying.png
+    - assets/anxious.png
+    - assets/calm.png
+    - assets/excitement.png
+    - assets/happy.png
+    - assets/lonely.png
+    - assets/sad.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
